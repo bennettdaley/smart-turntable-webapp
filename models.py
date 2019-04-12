@@ -22,6 +22,7 @@ class Track(db.Model):
     album_id = db.Column(db.Integer, db.ForeignKey("albums.id"), nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     number = db.Column(db.Integer, nullable=False)
+    side = db.Column(db.Integer, nullable=False)
     start = db.Column(db.Integer, nullable=False)
     end = db.Column(db.Integer, nullable=False)
 

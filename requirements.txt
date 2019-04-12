@@ -1,2 +1,7 @@
 flask
-sqlalchemy
+flask-session
+flask-sqlalchemy
+SQLalchemy
+wheel
+psycopg2
+requests
