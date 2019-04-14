@@ -26,10 +26,21 @@ Session(app)
 def index():
     return render_template("index.html")
 
+@app.route("/albums")
+def albums():
+    albums = Album.query.all()
+    return render_template("albums.html", albums=albums)
+
+@app.route("/albums/<string:album_id>")
+def album(album_id):
+    album = Album.query.filter_by(id=album_id).first()
+    tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+    return render_template("album.html", album=album, tracks=tracks)
+
 @app.route("/api/album_id/<string:album_id>")
 def getAlbumData(album_id):
     album = Album.query.filter_by(id=album_id).first()
-    tracks = Track.query.filter_by(album_id=album_id).all()
+    tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     track_num_and_title = {}
     for track in tracks:
         track_num_and_title[track.title] = track.number
