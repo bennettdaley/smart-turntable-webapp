@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ album.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ album.name }} by {{ album.artist }}</h1>
+
+    <ol>
+        {% for track in tracks %}
+            <li>
+                    {{ track.title }} is {{ track.duration }} (seconds)
+            </li>
+        {% else %}
+            <h5>No tracks found</h5>
+        {% endfor %}
+    </ol>
+{% endblock %}
