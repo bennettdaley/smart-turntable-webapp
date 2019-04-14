@@ -9,8 +9,8 @@ class Album(db.Model):
     artist = db.Column(db.String, nullable=False)
     num_tracks = db.Column(db.Integer, nullable=False)
 
-    def add_track(self, title, duration, number, start, end):
-        t = Track(title=title, album_id=self.id, duration=duration, number=number, start=start, end=end)
+    def add_track(self, title, duration, number, side, start, end):
+        t = Track(title=title, album_id=self.id, duration=duration, number=number, side=side, start=start, end=end)
         db.session.add(t)
         db.session.commit()
 
