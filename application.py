@@ -25,3 +25,31 @@ Session(app)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/api/album_id/<string:album_id>")
+def getAlbumData(album_id):
+    album = Album.query.filter_by(id=album_id).first()
+    tracks = Track.query.filter_by(album_id=album_id).all()
+    track_num_and_title = {}
+    for track in tracks:
+        track_num_and_title[track.title] = track.number
+
+    return jsonify({
+        "album_title": album.name,
+        "album_artist": album.artist,
+        "num_tracks": album.num_tracks,
+        "tracks": track_num_and_title,
+        })
+
+@app.route("/api/album_id/<string:album_id>/<string:track_id>")
+def getTrackData(album_id, track_id):
+    track = Track.query.filter_by(id=track_id).first()
+
+    return jsonify({
+        "track_title": track.title,
+        "duration": track.duration,
+        "number": track.number,
+        "side": track.side,
+        "start": track.start,
+        "end": track.end,
+        })
