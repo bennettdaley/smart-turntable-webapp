@@ -37,7 +37,7 @@ def album(album_id):
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     return render_template("album.html", album=album, tracks=tracks)
 
-@app.route("/api/album_id/<string:album_id>")
+@app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
@@ -52,7 +52,7 @@ def getAlbumData(album_id):
         "tracks": track_num_and_title,
         })
 
-@app.route("/api/album_id/<string:album_id>/<string:track_id>")
+@app.route("/api/albums/<string:album_id>/<string:track_id>")
 def getTrackData(album_id, track_id):
     track = Track.query.filter_by(id=track_id).first()
 
@@ -64,3 +64,10 @@ def getTrackData(album_id, track_id):
         "start": track.start,
         "end": track.end,
         })
+
+@app.route("/api/albums/<string:album_id>/<string:track_id>", methods=['PUT'])
+def setTrackData(album_id, track_id):
+    track = Track.query.get(track_id)
+    data = request.get_json() or {}
+    return jsonify(data)
+    #track.start = data[]
