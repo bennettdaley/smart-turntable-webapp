@@ -52,7 +52,7 @@ def getAlbumData(album_id):
         "tracks": track_num_and_title,
         })
 
-@app.route("/api/albums/<string:album_id>/<string:track_id>")
+@app.route("/api/albums/<string:album_id>/<string:track_id>", methods=['GET'])
 def getTrackData(album_id, track_id):
     track = Track.query.filter_by(id=track_id).first()
 
@@ -65,9 +65,20 @@ def getTrackData(album_id, track_id):
         "end": track.end,
         })
 
-@app.route("/api/albums/<string:album_id>/<string:track_id>", methods=['PUT'])
+@app.route("/api/albums/<string:album_id>/<string:track_id>/set", methods=['PUT'])
 def setTrackData(album_id, track_id):
     track = Track.query.get(track_id)
     data = request.get_json() or {}
     return jsonify(data)
     #track.start = data[]
+
+@app.route("/api/play", methods=['POST'])
+def playing():
+    if methods == 'POST':
+        playing = request.form.get("Play")
+        return "Now playing."
+        
+    elif methods == 'GET':
+        return jsonify({
+            "playing": playing
+            })
