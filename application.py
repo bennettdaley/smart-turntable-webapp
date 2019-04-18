@@ -40,7 +40,7 @@ def album(album_id):
     return render_template("album.html", album=album, tracks=tracks)
 
 @app.route("/play/albums/<string:album_id>/<string:track_id>", methods=['GET', 'POST'])
-def play(album_id):
+def play(album_id, track_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     #if request.method == 'POST':
