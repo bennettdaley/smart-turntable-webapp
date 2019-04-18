@@ -22,6 +22,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+my_status = "Pause"
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -36,6 +38,14 @@ def album(album_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     return render_template("album.html", album=album, tracks=tracks)
+
+@app.route("/play/albums/<string:album_id>/<string:track_id>", methods=['GET', 'POST'])
+def play(album_id):
+    album = Album.query.filter_by(id=album_id).first()
+    tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+    #if request.method == 'POST':
+
+    return render_template("play.html", album=album, tracks=tracks)
 
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):

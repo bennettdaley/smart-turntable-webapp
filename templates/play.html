@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ album.name }}
+{% endblock %}
+
+{% block body %}
+
+    <select>
+        
+      <option value="">Select Track</option>
+        {% for track in tracks}
+      <option value="{{ track.id }}">{{ track.title }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="button">Previous Track</button>
+    <button type="button">Play</button>
+    <button type="button">Pause</button>
+    <button type="button">Next Track</button>
+{% endblock %}
