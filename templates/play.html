@@ -12,8 +12,8 @@
       <option value="{{ track.id }}">{{ track.title }}</option>
         {% endfor %}
     </select>
-    <button type="button">Previous Track</button>
-    <button type="button">Play</button>
-    <button type="button">Pause</button>
-    <button type="button">Next Track</button>
+    <input type="submit" name="previous" value="Previous Track">
+    <input type="submit" name="play" value="Play">
+    <input type="submit" name="pause" value="Pause">
+    <input type="submit" name="next" value="Next Track">
 {% endblock %}
