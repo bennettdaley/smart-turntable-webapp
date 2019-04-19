@@ -95,7 +95,7 @@ def setTrackData(album_id, track_id):
     #track.start = data[]
 
 @app.route("/api/play_status")
-def play_status():
+def play_status_route():
     return jsonify({
         "play_status": play_status
         })
