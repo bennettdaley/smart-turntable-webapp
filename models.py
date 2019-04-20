@@ -26,3 +26,8 @@ class Track(db.Model):
     start = db.Column(db.Integer, nullable=False)
     end = db.Column(db.Integer, nullable=False)
 
+class NowPlaying(db.Model):
+    __tablename__ = "now_playing"
+    id = db.Column(db.Integer, primary_key=True)
+    is_playing = db.Column(db.String, nullable=False)
+    track_id = db.Column(db.Integer, db.ForeignKey("tracks.id"), nullable=False)

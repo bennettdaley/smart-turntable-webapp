@@ -22,12 +22,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-class play_status():
-    play_or_paused = "paused"
-    current_track = 0
-
-smart_playing = play_status()
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -48,18 +42,19 @@ def play(album_id, track_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     track = Track.query.get(track_id)
+    playing = NowPlaying.query.get(0)
     if request.method == 'POST':
         current_track = track_id
         if 'play' in request.form:
-            smart_playing.play_or_paused = "play"
+            playing.is_playing = "playing"
         elif 'pause' in request.form:
-            smart_playing.play_or_paused = "paused"
+            playing.is_playing = "paused"
         elif 'next' in request.form:
-            smart_playing.current_track += 1
-            smart_playing.play_or_paused = "play"
+            playing.current_track += 1
+            playing.is_playing = "playing"
         elif 'previous' in request.form:
-            smart_playing.current_track -= 1
-            smart_playing.play_or_paused = "play"
+            playing.current_track += 1
+            playing.is_playing = "playing"
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
 
@@ -100,9 +95,10 @@ def setTrackData(album_id, track_id):
 
 @app.route("/api/play_status")
 def play_status_route():
+    playing = NowPlaying.query.get(0)
     return jsonify({
-        "play_status": smart_playing.play_or_paused,
-        "current_track": smart_playing.current_track,
+        "play_status": playing.is_playing,
+        "current_track": playing.current_track,
         })
 
 @app.route("/api/current_track")
