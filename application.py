@@ -52,11 +52,13 @@ def play(album_id, track_id):
         elif 'pause' in request.form:
             play_status = "Paused"
         elif 'next' in request.form:
-            current_track = track_id + 1
+            current_track = (str)track_id + 1
             play_status = "Play"
         elif 'previous' in request.form:
-            current_track = track_id - 1
+            current_track = (str)track_id - 1
             play_status = "Play"
+
+    print(play_status)
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
 
