@@ -133,14 +133,3 @@ def current_track():
         "start": track.start,
         "end": track.end,
         })
-
-@app.route("/api/play", methods=['POST'])
-def playing():
-    if methods == 'POST':
-        playing = request.form.get("Play")
-        return "Now playing."
-        
-    elif methods == 'GET':
-        return jsonify({
-            "playing": playing
-            })
