@@ -12,7 +12,7 @@
       <option value="{{ track.id }}">{{ track.title }}</option>
         {% endfor %}
     </select>
-    <form action="{{ url_for('play') }}" method="post">
+    <form action="{{ url_for('play', album=album.id, track=track.id) }}" method="post">
         <input type="submit" name="previous" value="Previous Track">
         <input type="submit" name="play" value="Play">
         <input type="submit" name="pause" value="Pause">
