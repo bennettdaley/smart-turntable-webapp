@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ album.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>Current Artist: {{ album.artist }}</h1>
+    <h2>Current Album: {{ album.name }}</h2>
+    <h3>Current Track: {{ track.title }}</h3>
+    <form action="{{ url_for('play_track') }}" method="post">
+        <input type="submit" name="previous" value="Previous Track">
+        <input type="submit" name="play" value="Play">
+        <input type="submit" name="pause" value="Pause">
+        <input type="submit" name="next" value="Next Track">
+    </form>
+{% endblock %}

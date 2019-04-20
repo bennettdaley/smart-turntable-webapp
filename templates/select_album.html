@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Select Album
+{% endblock %}
+
+{% block body %}
+    <h1>Select an Album</h1>
+    <form action="{{ url_for('select_track') }}" method="post">
+        <select name="album_select">
+            <option value="">Select Album</option>
+        {% for album in albums %}
+            <option value="{{ album.id }}">{{ album.name }}</option>
+        {% endfor %}
+        </select>
+    </form>
+{% endblock %}

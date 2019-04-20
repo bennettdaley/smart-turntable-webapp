@@ -37,6 +37,46 @@ def album(album_id):
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     return render_template("album.html", album=album, tracks=tracks)
 
+@app.route("/select_album", methods=['GET'])
+def select_album():
+    albums = Album.query.all()
+    return render_template("select_album.html", albums=albums)
+
+@app.route("/select_track", methods=['POST'])
+def select_track():
+    #if requst.method == 'GET':
+        #playing_album = NowPlaying.query.get(0)
+        #album = Album.query.get()
+    if request.method == 'POST':
+        selection = request.form.get("album_select")
+        album = Album.query.get(selection)
+        tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+    return render_template("select_track.html", album=album, tracks=tracks)
+
+@app.route("/play_track", methods=['POST'])
+def play_track():
+    playing = NowPlaying.query.get(0)
+    if 'track_select' in request.form:
+        selection = request.form.get("track_select")
+        track = Track.query.get(selection)
+        album = Album.query.get(track.album_id)
+        playing.track_id = track.id
+    else:
+        elif 'play' in request.form:
+            playing.is_playing = "playing"
+        elif 'pause' in request.form:
+            playing.is_playing = "paused"
+        elif 'next' in request.form:
+            playing.track_id += 1
+            playing.is_playing = "playing"
+        elif 'previous' in request.form:
+            playing.track_id -= 1
+            playing.is_playing = "playing"
+    db.session.commit()
+    track = Track.query.get(playing.track_id)
+    album = Album.query.get(track.album_id)
+    return render_template("play_track.html", album=album, tracks=tracks, track=track, playing=playing.track_id)
+
 @app.route("/play/albums/<string:album_id>/<string:track_id>", methods=['GET','POST'])
 def play(album_id, track_id):
     album = Album.query.filter_by(id=album_id).first()
