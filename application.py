@@ -55,10 +55,10 @@ def play(album_id, track_id):
         elif 'pause' in request.form:
             smart_playing.is_playing = False
         elif 'next' in request.form:
-            smart_playing.current_track++
+            smart_playing.current_track += 1
             smart_playing.is_playing = True
         elif 'previous' in request.form:
-            smart_playing.current_track--
+            smart_playing.current_track -= 1
             smart_playing.is_playing = True
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
