@@ -55,6 +55,7 @@ def play(album_id, track_id):
         elif 'previous' in request.form:
             playing.track_id += 1
             playing.is_playing = "playing"
+        db.session.commit()
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
 
