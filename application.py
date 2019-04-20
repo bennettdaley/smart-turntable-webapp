@@ -44,6 +44,7 @@ def album(album_id):
 def play(album_id, track_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+    track = Track.query.get(track_id)
     if request.method == 'POST':
         current_track = track_id
         if 'play' in request.form:
@@ -57,7 +58,7 @@ def play(album_id, track_id):
             current_track = track_id - 1
             play_status = "Play"
         
-    return render_template("play.html", album=album, tracks=tracks)
+    return render_template("play.html", album=album, tracks=tracks, track=track)
 
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):

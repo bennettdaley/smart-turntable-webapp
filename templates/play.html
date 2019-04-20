@@ -8,8 +8,8 @@
     <select>
         
       <option value="">Select Track</option>
-        {% for track in tracks %}
-      <option value="{{ track.id }}">{{ track.title }}</option>
+        {% for tracky in tracks %}
+      <option value="{{ tracky.id }}">{{ track.title }}</option>
         {% endfor %}
     </select>
     <form action="{{ url_for('play', album=album.id, track=track.id) }}" method="post">
