@@ -23,8 +23,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 def get_play_status():
-    if play_status is None:
-        play_status = "paused"
     return play_status
 
 def set_play_status(my_status):
@@ -136,3 +134,6 @@ def playing():
         return jsonify({
             "playing": playing
             })
+
+
+set_play_status("paused")
