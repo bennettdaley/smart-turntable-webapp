@@ -23,7 +23,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 class play_status():
-    is_playing = False
+    play_or_paused = "paused"
     current_track = 0
 
 smart_playing = play_status()
@@ -51,15 +51,15 @@ def play(album_id, track_id):
     if request.method == 'POST':
         current_track = track_id
         if 'play' in request.form:
-            smart_playing.is_playing = True
+            smart_playing.play_or_paused = "play"
         elif 'pause' in request.form:
-            smart_playing.is_playing = False
+            smart_playing.play_or_paused = "paused"
         elif 'next' in request.form:
             smart_playing.current_track += 1
-            smart_playing.is_playing = True
+            smart_playing.play_or_paused = "play"
         elif 'previous' in request.form:
             smart_playing.current_track -= 1
-            smart_playing.is_playing = True
+            smart_playing.play_or_paused = "play"
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
 
