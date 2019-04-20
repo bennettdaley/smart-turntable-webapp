@@ -22,6 +22,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+play_status = "paused"
+current_track = 0
+
 def get_play_status():
     return play_status
 
@@ -29,8 +32,6 @@ def set_play_status(my_status):
     return my_status
 
 def get_current_track():
-    if current_track is None:
-        current_track = 0
     return current_track
 
 def set_current_track(my_track):
@@ -134,6 +135,3 @@ def playing():
         return jsonify({
             "playing": playing
             })
-
-
-set_play_status("paused")
