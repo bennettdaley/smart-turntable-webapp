@@ -5,13 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ url_for('play', album_id=album.id, track_id=track.id) }}" method="post">
-        <select name="track_select" onchange="this.form.submit()">
-            <option value="">Select Track</option>
-        {% for tracky in tracks %}
-            <option value="{{ tracky.id }}">{{ track.title }}</option>
-        {% endfor %}
-        </select>
+    <h1>Current playing: {{ track.title }}</h1>
+    <form action="{{ url_for('play', album_id=album.id, track_id=playing) }}" method="post">
         <input type="submit" name="previous" value="Previous Track">
         <input type="submit" name="play" value="Play">
         <input type="submit" name="pause" value="Pause">
