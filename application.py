@@ -101,7 +101,8 @@ def setTrackData(album_id, track_id):
 @app.route("/api/play_status")
 def play_status_route():
     return jsonify({
-        "play_status": smart_playing.current_track
+        "play_status": smart_playing.play_or_paused
+        "current_track": smart_playing.current_track
         })
 
 @app.route("/api/current_track")
