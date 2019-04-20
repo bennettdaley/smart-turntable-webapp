@@ -45,7 +45,11 @@ def play(album_id, track_id):
     playing = NowPlaying.query.get(0)
     if request.method == 'POST':
         current_track = track_id
-        if 'play' in request.form:
+        track_selection = request.form.get('track_select')
+        if track_selection != "":
+            current_track = track_selection
+            playing.track_id = current_track
+        elif 'play' in request.form:
             playing.is_playing = "playing"
         elif 'pause' in request.form:
             playing.is_playing = "paused"
