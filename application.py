@@ -50,10 +50,10 @@ def play(album_id, track_id):
         elif 'pause' in request.form:
             playing.is_playing = "paused"
         elif 'next' in request.form:
-            playing.current_track += 1
+            playing.track_id += 1
             playing.is_playing = "playing"
         elif 'previous' in request.form:
-            playing.current_track += 1
+            playing.track_id += 1
             playing.is_playing = "playing"
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
@@ -98,7 +98,7 @@ def play_status_route():
     playing = NowPlaying.query.get(0)
     return jsonify({
         "play_status": playing.is_playing,
-        "current_track": playing.current_track,
+        "current_track": playing.track_id,
         })
 
 @app.route("/api/current_track")
