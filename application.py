@@ -29,7 +29,7 @@ def get_play_status():
     return play_status
 
 def set_play_status(my_status):
-    return my_status
+    play_status = my_status
 
 def get_current_track():
     return current_track
