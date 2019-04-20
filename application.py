@@ -50,7 +50,7 @@ def select_track():
     if request.method == 'POST':
         selection = request.form.get("album_select")
         album = Album.query.get(selection)
-        tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+        tracks = Track.query.filter_by(album_id=album.id).order_by(Track.number).all()
     return render_template("select_track.html", album=album, tracks=tracks)
 
 @app.route("/play_track", methods=['POST'])
