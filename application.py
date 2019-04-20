@@ -41,9 +41,9 @@ def album(album_id):
 def play(album_id, track_id):
     album = Album.query.filter_by(id=album_id).first()
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
-    track = Track.query.get(track_id)
     playing = NowPlaying.query.get(0)
     if request.method == 'GET':
+        track = Track.query.get(track_id)
         playing.track_id = track_id
         db.session.commit()
     elif request.method == 'POST':
@@ -58,7 +58,7 @@ def play(album_id, track_id):
             playing.track_id -= 1
             playing.is_playing = "playing"
         db.session.commit()
-        
+        track = playing.track_id
     return render_template("play.html", album=album, tracks=tracks, track=track, playing=playing.track_id)
 
 @app.route("/api/albums/<string:album_id>")
