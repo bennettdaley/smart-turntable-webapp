@@ -147,7 +147,8 @@ def play_status_route():
 
 @app.route("/api/current_track")
 def current_track():
-    track = Track.query.get(current_track)
+    playing = NowPlaying.query.get(0)
+    track = Track.query.get(playing.track_id)
     return jsonify({
         "track_title": track.title,
         "duration": track.duration,
