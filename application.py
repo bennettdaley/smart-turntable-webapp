@@ -62,7 +62,7 @@ def play_track():
         album = Album.query.get(track.album_id)
         playing.track_id = track.id
     else:
-        elif 'play' in request.form:
+        if 'play' in request.form:
             playing.is_playing = "playing"
         elif 'pause' in request.form:
             playing.is_playing = "paused"
