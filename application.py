@@ -22,8 +22,21 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-play_status = "Paused"
-current_track = 0
+def get_play_status():
+    if play_status is None:
+        play_status = "paused"
+    return play_status
+
+def set_play_status(my_status):
+    return my_status
+
+def get_current_track():
+    if current_track is None:
+        current_track = 0
+    return current_track
+
+def set_current_track(my_track):
+    return my_track
 
 @app.route("/")
 def index():
@@ -48,18 +61,15 @@ def play(album_id, track_id):
     if request.method == 'POST':
         current_track = track_id
         if 'play' in request.form:
-            play_status = "Play"
+            set_play_status("play")
         elif 'pause' in request.form:
-            play_status = "Paused"
+            set_play_status("paused")
         elif 'next' in request.form:
-            current_track = int(track_id) + 1
-            play_status = "Play"
+            set_current_track(int(track_id) + 1)
+            set_play_status("play")
         elif 'previous' in request.form:
-            current_track = int(track_id) - 1
-            play_status = "Play"
-
-    print(play_status)
-    print(track_id)
+            set_current_track(int(track_id) - 1)
+            set_play_status("play")
         
     return render_template("play.html", album=album, tracks=tracks, track=track)
 
@@ -101,7 +111,7 @@ def setTrackData(album_id, track_id):
 @app.route("/api/play_status")
 def play_status_route():
     return jsonify({
-        "play_status": play_status
+        "play_status": get_play_status()
         })
 
 @app.route("/api/current_track")
