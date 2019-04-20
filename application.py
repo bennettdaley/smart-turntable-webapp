@@ -43,7 +43,10 @@ def play(album_id, track_id):
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     track = Track.query.get(track_id)
     playing = NowPlaying.query.get(0)
-    if request.method == 'POST':
+    if request.method == 'GET':
+        playing.track_id = track_id
+        db.session.commit()
+    elif request.method == 'POST':
         if 'play' in request.form:
             playing.is_playing = "playing"
         elif 'pause' in request.form:

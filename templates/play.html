@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Current playing: {{ track.title }}</h1>
+    <h1>Current Artist: {{ album.artist }}</h1>
+    <h2>Current Album: {{ album.name }}</h2>
+    <h3>Current Track: {{ track.title }}</h3>
     <form action="{{ url_for('play', album_id=album.id, track_id=playing) }}" method="post">
         <input type="submit" name="previous" value="Previous Track">
         <input type="submit" name="play" value="Play">
