@@ -49,7 +49,7 @@ def play(album_id, track_id):
         if track_selection != "":
             current_track = track_selection
             playing.track_id = current_track
-        elif 'play' in request.form:
+        if 'play' in request.form:
             playing.is_playing = "playing"
         elif 'pause' in request.form:
             playing.is_playing = "paused"
