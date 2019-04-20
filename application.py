@@ -44,11 +44,6 @@ def play(album_id, track_id):
     track = Track.query.get(track_id)
     playing = NowPlaying.query.get(0)
     if request.method == 'POST':
-        current_track = track_id
-        track_selection = request.form.get('track_select')
-        if track_selection != "":
-            current_track = track_selection
-            playing.track_id = current_track
         if 'play' in request.form:
             playing.is_playing = "playing"
         elif 'pause' in request.form:
@@ -61,7 +56,7 @@ def play(album_id, track_id):
             playing.is_playing = "playing"
         db.session.commit()
         
-    return render_template("play.html", album=album, tracks=tracks, track=track)
+    return render_template("play.html", album=album, tracks=tracks, track=track, playing=playing.track_id)
 
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):
