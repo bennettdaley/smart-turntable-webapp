@@ -58,7 +58,7 @@ def play(album_id, track_id):
             playing.track_id -= 1
             playing.is_playing = "playing"
         db.session.commit()
-        track = playing.track_id
+        track = Track.query.get(playing.track_id)
     return render_template("play.html", album=album, tracks=tracks, track=track, playing=playing.track_id)
 
 @app.route("/api/albums/<string:album_id>")
