@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Album
+{% endblock %}
+
+{% block body %}
+    <h1>Add an Album</h1>
+    <form action="{{ url_for('add_tracks') }}" method="post">
+        <input type="text" name="name" placeholder="Enter an Album Title">
+        <input type="text" name="artist" placeholder="Enter an Artist Name">
+        <input type="number" name="num_tracks" min="1" max="50" placeholder="Enter Number of Tracks">
+        <button>Add Album</button>
+    </form>
+{% endblock %}

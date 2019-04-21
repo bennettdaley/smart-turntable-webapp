@@ -37,8 +37,6 @@ def album(album_id):
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     return render_template("album.html", album=album, tracks=tracks)
 
-
-
 @app.route("/select_album", methods=['GET'])
 def select_album():
     albums = Album.query.all()
@@ -97,6 +95,30 @@ def play_track():
     album = Album.query.get(track.album_id)
     tracks = Track.query.filter_by(album_id=str(album.id)).order_by(Track.number).all()
     return render_template("play_track.html", album=album, tracks=tracks, track=track, playing=playing.track_id)
+
+@app.route("/add_album")
+def addAlbum():
+    return render_template("add_album.html")
+
+@app.route("/add_album/add_tracks", methods=['POST'])
+def addTracks():
+    name = request.form.get("name")
+    artist = request.form.get("artist")
+    num_tracks = request.form.get("num_tracks")
+    album = Album(name=name, artist=artist, num_tracks=num_tracks)
+    db.session.add(album)
+    return render_template("add_tracks.html", album_id=album.id, name=name, artist=artist, num_tracks=num_tracks)
+
+@app.route("/add_album/add_tracks/finished")
+def finishAddingTracks():
+    track_titles = request.form.getlist("title")
+    album_id = request.form.get("album_id")
+    album = Album.query.get(album_id)
+    track_num = 1
+    for title in track_titles:
+        album.add_track(title, 1, track_num, 'A', 0, 1)
+        track_num += 1
+    return "Finished Adding Tracks"
 
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):
