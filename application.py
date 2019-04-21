@@ -74,6 +74,8 @@ def play_track():
             valid_track_ids = []
             for valid_track in valid_tracks:
                 valid_track_ids.append(valid_track.id)
+            print(valid_track_ids)
+            print(playing.track_id)
             if (playing.track_id + 1) in valid_track_ids:
                 playing.track_id += 1
                 playing.is_playing = "playing"
@@ -83,6 +85,8 @@ def play_track():
             valid_track_ids = []
             for valid_track in valid_tracks:
                 valid_track_ids.append(valid_track.id)
+            print(valid_track_ids)
+            print(playing.track_id)
             if (playing.track_id - 1) in valid_track_ids:
                 playing.track_id -= 1
                 playing.is_playing = "playing"
