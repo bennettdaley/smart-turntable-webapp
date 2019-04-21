@@ -69,7 +69,8 @@ def play_track():
         elif 'pause' in request.form:
             playing.is_playing = "paused"
         elif 'next' in request.form:
-            this_album = Album.query.get(playing.track_id)
+            this_track = Track.query.get(playing.track_id)
+            this_album = Album.query.get(this_track.album_id)
             valid_tracks = Track.query.filter_by(album_id=this_album.id).all()
             valid_track_ids = []
             for valid_track in valid_tracks:
@@ -80,7 +81,8 @@ def play_track():
                 playing.track_id += 1
                 playing.is_playing = "playing"
         elif 'previous' in request.form:
-            this_album = Album.query.get(playing.track_id)
+            this_track = Track.query.get(playing.track_id)
+            this_album = Album.query.get(this_track.album_id)
             valid_tracks = Track.query.filter_by(album_id=this_album.id).all()
             valid_track_ids = []
             for valid_track in valid_tracks:
