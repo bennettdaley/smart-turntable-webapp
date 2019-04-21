@@ -117,7 +117,7 @@ def finishAddingTracks():
     album = Album.query.get(album_id)
     track_num = 1
     for title in track_titles:
-        album.add_track(title=title, duration=1, number=track_num, side='A', start=0, end=1)
+        album.add_track(title=title, duration=1, number=track_num, side=1, start=0, end=1)
         track_num += 1
     return "Finished Adding Tracks"
 
