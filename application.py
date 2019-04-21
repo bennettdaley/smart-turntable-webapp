@@ -110,14 +110,14 @@ def addTracks():
     db.session.commit()
     return render_template("add_tracks.html", album_id=album.id, name=name, artist=artist, num_tracks=int(num_tracks))
 
-@app.route("/add_album/add_tracks/finished")
+@app.route("/add_album/add_tracks/finished", methods=['POST'])
 def finishAddingTracks():
     track_titles = request.form.getlist("title")
     album_id = request.form.get("album_id")
     album = Album.query.get(album_id)
     track_num = 1
     for title in track_titles:
-        album.add_track(title, 1, track_num, 'A', 0, 1)
+        album.add_track(title=title, duration=1, number=track_num, side='A', start=0, end=1)
         track_num += 1
     return "Finished Adding Tracks"
 
