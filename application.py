@@ -37,6 +37,8 @@ def album(album_id):
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
     return render_template("album.html", album=album, tracks=tracks)
 
+
+
 @app.route("/select_album", methods=['GET'])
 def select_album():
     albums = Album.query.all()
@@ -67,11 +69,18 @@ def play_track():
         elif 'pause' in request.form:
             playing.is_playing = "paused"
         elif 'next' in request.form:
-            playing.track_id += 1
-            playing.is_playing = "playing"
+            this_album = Album.query.get(playing.track_id)
+            valid_tracks = Track.query.get(this_album.id).id
+            print(valid_tracks)
+            if (playing.track_id + 1) in valid_tracks:
+                playing.track_id += 1
+                playing.is_playing = "playing"
         elif 'previous' in request.form:
-            playing.track_id -= 1
-            playing.is_playing = "playing"
+            this_album = Album.query.get(playing.track_id)
+            valid_tracks = Track.query.get(this_album.id).id
+            if (playing.track_id - 1) in valid_tracks:
+                playing.track_id -= 1
+                playing.is_playing = "playing"
     db.session.commit()
     track = Track.query.get(playing.track_id)
     album = Album.query.get(track.album_id)
