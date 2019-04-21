@@ -107,6 +107,7 @@ def addTracks():
     num_tracks = request.form.get("num_tracks")
     album = Album(name=name, artist=artist, num_tracks=int(num_tracks))
     db.session.add(album)
+    db.session.commit()
     return render_template("add_tracks.html", album_id=album.id, name=name, artist=artist, num_tracks=int(num_tracks))
 
 @app.route("/add_album/add_tracks/finished")
