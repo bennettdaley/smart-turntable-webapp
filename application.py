@@ -119,7 +119,7 @@ def finishAddingTracks():
     for title in track_titles:
         album.add_track(title=title, duration=1, number=track_num, side=1, start=0, end=1)
         track_num += 1
-    return "Finished Adding Tracks"
+    return render_template("index.html")
 
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):
