@@ -77,7 +77,7 @@ def play_track():
             print(playing.track_id)
             if (playing.track_id + 1) in valid_track_ids:
                 playing.track_id += 1
-                playing.is_playing = "playing"
+                playing.is_playing = "paused"
         elif 'previous' in request.form:
             this_track = Track.query.get(playing.track_id)
             this_album = Album.query.get(this_track.album_id)
@@ -89,7 +89,7 @@ def play_track():
             print(playing.track_id)
             if (playing.track_id - 1) in valid_track_ids:
                 playing.track_id -= 1
-                playing.is_playing = "playing"
+                playing.is_playing = "paused"
     db.session.commit()
     track = Track.query.get(playing.track_id)
     album = Album.query.get(track.album_id)
