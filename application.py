@@ -133,9 +133,9 @@ def add_track_locations():
     playing = NowPlaying.query.get(0)
     track_ids = []
     for track in tracks:
-        playing.is_playing = "scanning"
         track_ids.append(track.id)
     playing.scan_track_ids = track_ids
+    playing.is_playing = "scanning"
     db.session.commit()
     return render_template("index.html")
 
@@ -185,6 +185,13 @@ def play_status_route():
         "current_track": playing.track_id,
         "scan_track_ids": playing.scan_track_ids
         })
+
+@app.route("/api/set_play_status", methods=['POST'])
+def set_play_status_route():
+    content = request.get_json() or {}
+    playing = NowPlaying.query.get(0)
+    playing.is_playing = content["is_playing"]
+    db.session.commit()
 
 @app.route("/api/current_track")
 def current_track():
