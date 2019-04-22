@@ -191,6 +191,7 @@ def set_play_status_route():
     content = request.get_json() or {}
     playing = NowPlaying.query.get(0)
     playing.is_playing = content["is_playing"]
+    playing.scan_track_ids = content["set_track_data"]
     db.session.commit()
 
 @app.route("/api/current_track")
@@ -198,6 +199,7 @@ def current_track():
     playing = NowPlaying.query.get(0)
     track = Track.query.get(playing.track_id)
     return jsonify({
+        "id": track.id,
         "track_title": track.title,
         "duration": track.duration,
         "number": track.number,
