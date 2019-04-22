@@ -126,7 +126,7 @@ def select_album_add_track_locations():
     albums = Album.query.all()
     return render_template("select_album_add_track_locations.html", albums=albums)
 
-@app.route("/add_track_locations", methods=['POST']):
+@app.route("/add_track_locations", methods=['POST'])
 def add_track_locations():
     album_id = request.form.get("album_select")
     tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
