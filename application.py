@@ -156,6 +156,14 @@ def setTrackData(album_id, track_id):
     return jsonify(data)
     #track.start = data[]
 
+@app.route("/api/set_track_location", methods=['POST'])
+def set_track_location():
+    content = request.get_json() or {}
+    track = Track.query.get(content["track_id"])
+    track.start = content["start"]
+    track.end = content["end"]
+    db.session.commit()
+
 @app.route("/api/play_status")
 def play_status_route():
     playing = NowPlaying.query.get(0)
