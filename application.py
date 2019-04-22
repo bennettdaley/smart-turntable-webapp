@@ -121,6 +121,24 @@ def finishAddingTracks():
         track_num += 1
     return render_template("index.html")
 
+@app.route("/select_album_add_track_locations")
+def select_album_add_track_locations():
+    albums = Album.query.all()
+    return render_template("select_album_add_track_locations.html", albums=albums)
+
+@app.route("/add_track_locations", methods=['POST']):
+def add_track_locations():
+    album_id = request.form.get("album_select")
+    tracks = Track.query.filter_by(album_id=album_id).order_by(Track.number).all()
+    playing = NowPlaying.query.get(0)
+    track_ids = []
+    for track in tracks:
+        playing.is_playing = "scanning"
+        track_ids.append(track.id)
+    playing.scan_track_ids = track_ids
+    db.session.commit()
+    return render_template("index.html")
+
 @app.route("/api/albums/<string:album_id>")
 def getAlbumData(album_id):
     album = Album.query.filter_by(id=album_id).first()
@@ -165,6 +183,7 @@ def play_status_route():
     return jsonify({
         "play_status": playing.is_playing,
         "current_track": playing.track_id,
+        "scan_track_ids": playing.scan_track_ids
         })
 
 @app.route("/api/current_track")
