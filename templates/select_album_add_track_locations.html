@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Select Album to Find Tracks
+{% endblock %}
+
+{% block body %}
+    <h1>Select an Album to Find Tracks</h1>
+    <form action="{{ url_for('add_track_locations') }}" method="post">
+        <select name="album_select">
+            <option value="">Select Album</option>
+        {% for album in albums %}
+            <option value="{{ album.id }}">{{ album.name }}</option>
+        {% endfor %}
+        </select>
+        <button type="submit">Select</button>
+    </form>
+{% endblock %}

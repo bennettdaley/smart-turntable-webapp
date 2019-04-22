@@ -31,3 +31,4 @@ class NowPlaying(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_playing = db.Column(db.String, nullable=False)
     track_id = db.Column(db.Integer, db.ForeignKey("tracks.id"), nullable=False)
+    scan_track_ids = db.Column(db.ARRAY(db.Integer), nullable=True)
